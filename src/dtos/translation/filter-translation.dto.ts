@@ -1,4 +1,4 @@
-import { IsOptional, IsString } from 'class-validator';
+import { IsNumberString, IsOptional, IsString } from 'class-validator';
 
 export class FilterTranslationDto {
   @IsString()
@@ -12,4 +12,12 @@ export class FilterTranslationDto {
   @IsString()
   @IsOptional()
   ns?: string;
+
+  @IsNumberString()
+  @IsOptional()
+  page?: number;
+
+  @IsNumberString()
+  @IsOptional()
+  limit?: number;
 }

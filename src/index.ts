@@ -22,6 +22,7 @@ export * from './dtos/translation/create-translation.dto';
 export * from './dtos/translation/update-translation.dto';
 export * from './dtos/translation/filter-translation.dto';
 export * from './dtos/translation/missing-translation.dto';
+export * from './dtos/translation/batch-translate.dto';
 
 // Services
 export * from './services/language.service';

@@ -100,8 +100,8 @@ export class TranslationsService {
       }
       
       // Add pagination for large datasets
-      const page = 1;
-      const limit = 100;
+      const page = filterDto?.page ? Math.max(1, Number(filterDto.page)) : 1;
+      const limit = filterDto?.limit ? Math.min(100, Math.max(1, Number(filterDto.limit))) : 100;
       queryBuilder.skip((page - 1) * limit).take(limit);
       
       return await queryBuilder.getMany();

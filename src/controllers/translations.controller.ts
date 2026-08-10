@@ -13,6 +13,11 @@ import { ParseStringParamPipe } from '../pipe/parse-string-param.pipe';
 export class TranslationsController {
   constructor(private readonly translationsService: TranslationsService) {}
 
+  @Get('detail/:id')
+  findById(@Param('id') id: string) {
+    return this.translationsService.findById(id);
+  }
+
   @Get(':lang/:ns')
   getTranslations(
     @Param('lang', new ParseStringParamPipe({ required: true, decodeUrl: true })) lang: string, 
@@ -24,11 +29,6 @@ export class TranslationsController {
   @Get()
   findAll(@Query() filterDto: FilterTranslationDto) {
     return this.translationsService.findAll(filterDto);
-  }
-
-  @Get('detail/:id')
-  findById(@Param('id') id: string) {
-    return this.translationsService.findById(id);
   }
   
   @Post()
@@ -46,14 +46,19 @@ export class TranslationsController {
     return this.translationsService.remove(id);
   }
 
-  @Post('add/:lng/:ns')
+  @Post('add-many/:lng/:ns')
   async addManyTranslation(
     @Param('lng') lng: string,
     @Param('ns') ns: string,
     @Body() inputs: Record<string, string>
   ) {
     const count = await this.translationsService.addManyTranslation(lng, ns, inputs);
-    return { success: true, count };
+    return count;
+  }
+
+  @Post('add-translation')
+  addTranslation(@Body() dto: MissingTranslationDto) {
+    return this.translationsService.addTranslation(dto);
   }
 
   @Post('batch-translate')
